@@ -1,0 +1,261 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #ffffff;
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 220vh; /* enough scroll for intro */
+}
+
+.page-header .top-word {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.22em;
+}
+
+/* Big word locked in the middle of the screen */
+.wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.word {
+  font-size: 6rem;
+  letter-spacing: 0.3rem;
+}
+
+.word span {
+  display: inline-block;
+  transition: font-family 0.2s ease, opacity 0.4s ease;
+}
+
+.word.fade-out {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* Smaller word at the top of the page */
+.top-word {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  letter-spacing: 0.25rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* On inner pages, let the header layout control the top-word position */
+/* .inner-page .top-word {
+  position: static;
+  top: auto;
+  left: auto;
+  transform: none;
+}
+  */
+
+.inner-page .top-word {
+  position: fixed;
+  top: 20px;
+  left: 32px;        /* aligns with page padding */
+  transform: none;
+  text-align: left;
+  white-space: nowrap;
+  font-size: 1.8rem;
+}
+
+body:not(.inner-page) .top-word span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+body:not(.inner-page) .top-word span.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* INNER PAGES: header letters are always visible, only font changes */
+.inner-page .top-word span {
+  display: inline-block;
+  opacity: 1;
+  transform: translateY(0);
+  transition: font-family 0.2s ease;
+}
+
+/* When a letter "arrives" at the top */
+.top-word span.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Center menu that appears after full word ascends */
+.menu {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  z-index: 5;
+}
+
+.menu-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Simple horizontal menu */
+.menu-inner {
+  display: flex;
+  flex-direction: row;
+  gap: 3.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Minimal text-style buttons in Arial */
+.menu-item {
+  border: none;
+  background: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s ease, transform 0.12s ease-out;
+}
+
+/* Default hover */
+.menu-item:hover {
+  opacity: 0.7;
+  transform: translateY(-1px);
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.6;
+  font-size: 0.9rem;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: opacity 0.3s ease;
+  z-index: 20;
+}
+
+/* Inner page layout tweaks */
+.page-content {
+  max-width: 820px;
+  margin: 140px auto 80px auto; /* leaves space for top word */
+  padding: 0 3rem 0 2rem;       /* a bit more right padding so text doesn't collide with nav */
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Inner page heading style */
+.page-content h1 {
+  font-size: 1.4rem;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  margin-bottom: 1.2rem;
+}
+
+/* Paragraph spacing */
+.page-content p {
+  margin-bottom: 1rem;
+}
+
+/* Slightly smaller top word on inner pages (you already have this, just keep it) */
+/*.inner-page .top-word {
+  font-size: 1.8rem;
+} 
+  */
+
+.inner-page .top-word {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;          /* tweak this until it looks right */
+  text-align: center;
+  white-space: nowrap;   /* prevents wrapping if word is long */
+  font-size: 1.8rem;
+}
+
+/* -----------------------------------------
+   Header wrapper (aligns top word with nav)
+------------------------------------------- */
+.page-header {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  padding: 0 32px;
+  display: flex;
+  align-items: flex-end;   /* 👈 aligns nav with bottom of top-word */
+  justify-content: space-between;
+  z-index: 20;
+  pointer-events: none;    /* so page scroll doesn’t get blocked */
+}
+
+.page-header * {
+  pointer-events: auto;    /* but allow clicking on nav links */
+}
+
+/* Move original top-word styles here (unchanged) */
+.page-header .top-word {
+  font-size: 2rem;
+  letter-spacing: 0.25rem;
+}
+
+/* Horizontal nav stays the same */
+.top-nav {
+  position: fixed;
+  top: 40px;      /* or a bit lower if you want it at the bottom of the word */
+  right: 32px;
+  display: flex;
+  gap: 1.4rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  z-index: 20;
+}
+
+.top-nav a {
+  text-decoration: none;
+  color: #000;
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
+
+.top-nav a:hover {
+  opacity: 0.9;
+}
+
+.top-nav a.active {
+  opacity: 1;
+}
+
+.inner-page .page-header .top-word {
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none;
+  width: auto;
+  text-align: left;
+  white-space: nowrap;
+}
