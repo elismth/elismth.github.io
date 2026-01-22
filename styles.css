@@ -1,22 +1,124 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* =========================
+   Base Reset
+========================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background: #ffffff;
   color: #000000;
   font-family: Arial, Helvetica, sans-serif;
-  height: 220vh; /* enough scroll for intro */
 }
 
-.page-header .top-word {
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.22em;
+/* =========================
+   Global Header / Top Bar
+   (Same on every page)
+========================= */
+.site-header {
+  position: fixed;
+  top: 18px;
+  left: 32px;
+  right: 32px;
+  z-index: 100;
+  padding-top: 8px;
+  /* border-top: 2px solid #000; */
 }
 
-/* Big word locked in the middle of the screen */
+/* top row */
+.topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: baseline;
+  gap: 2.2rem;
+  flex: 1 1 50%;
+  min-width: 0;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: baseline;
+  flex: 0 0 auto;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #000;
+  font-size: 0.9rem;          /* same size as brand (per your example) */
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, transform 0.12s ease-out;
+  white-space: nowrap;
+}
+
+.nav-item:hover { opacity: 0.9; transform: translateY(-1px); }
+.nav-item.active { opacity: 1; }
+
+.nav-item.brand {
+  font-weight: 600;
+  opacity: 0.85; /* slightly stronger but still same size */
+}
+
+/* =========================
+   Top Word (animated by page-header.js)
+========================= */
+.top-word {
+  margin-top: 10px; /* sits just under the nav row */
+  font-size: 2rem;
+  letter-spacing: 0.25rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* home page: hidden until intro ends */
+body.home .top-word {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+body.home.intro-done .top-word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   Page Content
+========================= */
+.page-content {
+  max-width: 820px;
+  margin: 160px auto 80px auto; /* leaves room for header + top-word */
+  padding: 0 3rem 0 2rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.page-content h1 {
+  font-size: 1.4rem;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  margin-bottom: 1.2rem;
+}
+
+.page-content p { margin-bottom: 1rem; }
+
+/* =========================
+   Home intro overlay
+========================= */
+body.no-scroll { overflow: hidden; }
+
+.intro-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none; /* don’t block header clicks */
+}
+
 .wrapper {
   position: fixed;
   inset: 0;
@@ -41,221 +143,125 @@ body {
   transition: opacity 0.6s ease;
 }
 
-/* Smaller word at the top of the page */
-.top-word {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  letter-spacing: 0.25rem;
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* On inner pages, let the header layout control the top-word position */
-/* .inner-page .top-word {
-  position: static;
-  top: auto;
-  left: auto;
-  transform: none;
-}
-  */
-
-.inner-page .top-word {
-  position: fixed;
-  top: 20px;
-  left: 32px;        /* aligns with page padding */
-  transform: none;
-  text-align: left;
-  white-space: nowrap;
-  font-size: 1.8rem;
-}
-
-body:not(.inner-page) .top-word span {
+.word span.space {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  width: 0.6em;
 }
 
-body:not(.inner-page) .top-word span.visible {
-  opacity: 1;
-  transform: translateY(0);
+.word span.locked {
+  animation: lock-pop 120ms ease-out;
 }
 
-/* INNER PAGES: header letters are always visible, only font changes */
-.inner-page .top-word span {
-  display: inline-block;
-  opacity: 1;
-  transform: translateY(0);
-  transition: font-family 0.2s ease;
+@keyframes lock-pop {
+  0%   { transform: scale(0.94); }
+  100% { transform: scale(1); }
 }
 
-/* When a letter "arrives" at the top */
-.top-word span.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Center menu that appears after full word ascends */
-.menu {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease;
-  z-index: 5;
-}
-
-.menu-visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Simple horizontal menu */
-.menu-inner {
-  display: flex;
-  flex-direction: row;
-  gap: 3.5rem;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Minimal text-style buttons in Arial */
-.menu-item {
-  border: none;
-  background: none;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.4rem;
-  letter-spacing: 0.12em;
-  text-transform: lowercase;
-  cursor: pointer;
-  padding: 0;
-  transition: opacity 0.2s ease, transform 0.12s ease-out;
-}
-
-/* Default hover */
-.menu-item:hover {
-  opacity: 0.7;
-  transform: translateY(-1px);
-}
-
-/* Scroll hint */
+/* Optional hint */
 .scroll-hint {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  opacity: 0.6;
+  opacity: 0.0;
   font-size: 0.9rem;
-  font-family: Arial, Helvetica, sans-serif;
   transition: opacity 0.3s ease;
-  z-index: 20;
+  z-index: 70;
 }
 
-/* Inner page layout tweaks */
-.page-content {
-  max-width: 820px;
-  margin: 140px auto 80px auto; /* leaves space for top word */
-  padding: 0 3rem 0 2rem;       /* a bit more right padding so text doesn't collide with nav */
-  line-height: 1.7;
-  font-size: 0.95rem;
-}
+/* =========================
+   Contact list
+========================= */
+.contact-list { display: grid; gap: 1rem; margin-top: 1.5rem; }
 
-/* Inner page heading style */
-.page-content h1 {
-  font-size: 1.4rem;
-  letter-spacing: 0.18em;
-  text-transform: lowercase;
-  margin-bottom: 1.2rem;
-}
-
-/* Paragraph spacing */
-.page-content p {
-  margin-bottom: 1rem;
-}
-
-/* Slightly smaller top word on inner pages (you already have this, just keep it) */
-/*.inner-page .top-word {
-  font-size: 1.8rem;
-} 
-  */
-
-.inner-page .top-word {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 320px;          /* tweak this until it looks right */
-  text-align: center;
-  white-space: nowrap;   /* prevents wrapping if word is long */
-  font-size: 1.8rem;
-}
-
-/* -----------------------------------------
-   Header wrapper (aligns top word with nav)
-------------------------------------------- */
-.page-header {
-  position: fixed;
-  top: 20px;
-  left: 0;
-  width: 100%;
-  padding: 0 32px;
+.contact-item {
   display: flex;
-  align-items: flex-end;   /* 👈 aligns nav with bottom of top-word */
   justify-content: space-between;
-  z-index: 20;
-  pointer-events: none;    /* so page scroll doesn’t get blocked */
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
 }
 
-.page-header * {
-  pointer-events: auto;    /* but allow clicking on nav links */
+.contact-item a { color: #000; text-decoration: none; opacity: 0.75; }
+.contact-item a:hover { opacity: 1; text-decoration: underline; }
+
+/* ensure the page can scroll normally */
+body {
+  min-height: 100vh;
 }
 
-/* Move original top-word styles here (unchanged) */
-.page-header .top-word {
-  font-size: 2rem;
-  letter-spacing: 0.25rem;
+.word-scroll {
+  width: 90%;
+  max-width: 1536px;
+  margin-inline: auto;
+  margin-top: 6rem;
+
+  height: 55vh;
+  position: relative;
+  overflow: hidden;
+
+  border-top: 1px solid rgba(0,0,0,0.18);
+  border-bottom: 1px solid rgba(0,0,0,0.18);
+
+  /* optional: fade edges (like your mask idea, but vertical) */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0),
+    rgba(0,0,0,1) 18%,
+    rgba(0,0,0,1) 82%,
+    rgba(0,0,0,0)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0),
+    rgba(0,0,0,1) 18%,
+    rgba(0,0,0,1) 82%,
+    rgba(0,0,0,0)
+  );
 }
 
-/* Horizontal nav stays the same */
-.top-nav {
-  position: fixed;
-  top: 40px;      /* or a bit lower if you want it at the bottom of the word */
-  right: 32px;
-  display: flex;
-  gap: 1.4rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: lowercase;
-  z-index: 20;
+/* the actual scrollable layer */
+.word-scroll-track {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  /* hide scrollbar but keep scrolling */
+  scrollbar-width: none; /* firefox */
+}
+.word-scroll-track::-webkit-scrollbar { width: 0; height: 0; }
+
+/* create a tall invisible scroll “track” */
+.word-scroll-track::before {
+  content: "";
+  display: block;
+  height: 300vh; /* more = longer before loop triggers */
 }
 
-.top-nav a {
-  text-decoration: none;
-  color: #000;
-  opacity: 0.45;
-  transition: opacity 0.2s ease;
-}
+/* the word stays LOCKED in place */
+.scroll-word {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
-.top-nav a:hover {
-  opacity: 0.9;
-}
-
-.top-nav a.active {
-  opacity: 1;
-}
-
-.inner-page .page-header .top-word {
-  position: static;
-  left: auto;
-  top: auto;
-  transform: none;
-  width: auto;
-  text-align: left;
+  text-align: center;
+  font-size: clamp(5rem, 10vw, 8rem);
+  letter-spacing: clamp(0.15rem, 0.5vw, 0.35rem);
   white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.scroll-word span {
+  display: inline-block;
+  transition: font-family 0.15s linear;
+}
+
+.scroll-word span.space {
+  width: 0.6em;
 }

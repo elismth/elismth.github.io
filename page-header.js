@@ -2,83 +2,82 @@ document.addEventListener("DOMContentLoaded", () => {
   const topContainer = document.getElementById("top-word");
   if (!topContainer) return;
 
-  // ===== CONFIG =====
-  const HEADER_DURATION = 3000 + Math.random() * 2000; // 3–5s
-  const HEADER_COOLDOWN = 80; // ms between header flips
+  const HEADER_DURATION = 1750 + Math.random() * 2000;
+  const HEADER_COOLDOWN = 80;
 
   const fontOptions = [
     '"Times New Roman", serif',
-    'Georgia, serif',
+    "Georgia, serif",
     '"Courier New", monospace',
     '"Lucida Console", monospace',
     '"Comic Sans MS", cursive',
     '"Trebuchet MS", sans-serif',
-    'Impact, fantasy',
+    "Impact, fantasy",
     '"Palatino Linotype", Palatino, serif',
     '"Gill Sans", Calibri, sans-serif'
   ];
 
-  const finalFont = 'Arial, Helvetica, sans-serif';
+  const finalFont = "Arial, Helvetica, sans-serif";
 
-  // ===== 1. HEADER LETTERS =====
-  const WORD = (topContainer.dataset.word || "page");
+  const WORD = (topContainer.dataset.word || "page").toString();
+
   topContainer.innerHTML = "";
-  const headerSpans = [];
+
+  const letterSpans = [];
 
   for (let i = 0; i < WORD.length; i++) {
+    const ch = WORD[i];
     const span = document.createElement("span");
-    span.textContent = WORD[i];
     span.style.display = "inline-block";
+
+    if (ch === " ") {
+      span.classList.add("space");
+      span.innerHTML = "&nbsp;";
+      topContainer.appendChild(span);
+      continue;
+    }
+
+    span.textContent = ch;
+    span.classList.add("letter");
     topContainer.appendChild(span);
-    headerSpans.push(span);
+    letterSpans.push(span);
   }
 
-  const headerCount = headerSpans.length;
+  const headerCount = letterSpans.length;
 
-  // initial random fonts for header
-  headerSpans.forEach(s => {
-    s.style.fontFamily =
-      fontOptions[Math.floor(Math.random() * fontOptions.length)];
+  letterSpans.forEach((s) => {
+    s.style.fontFamily = fontOptions[Math.floor(Math.random() * fontOptions.length)];
   });
 
-  // ===== ANIMATION LOOP (HEADER ONLY) =====
   let start = performance.now();
-  let lastHeaderFlip = 0;
+  let lastFlip = 0;
 
   function animate(now) {
     const elapsed = now - start;
-    const headerProgress = Math.min(elapsed / HEADER_DURATION, 1);
+    const progress = Math.min(elapsed / HEADER_DURATION, 1);
 
-    // how many letters should be "locked" so far
-    const headerLockedCount = Math.floor(headerProgress * headerCount);
+    const lockedCount = Math.floor(progress * headerCount);
 
-    const shouldFlipHeader =
-      headerProgress < 1 && now - lastHeaderFlip > HEADER_COOLDOWN;
+    const shouldFlip = progress < 1 && (now - lastFlip > HEADER_COOLDOWN);
 
-    // ----- HEADER: flip only UNLOCKED letters -----
-    if (shouldFlipHeader) {
-      headerSpans.forEach((span, index) => {
-        if (index >= headerLockedCount) {
-          span.style.fontFamily =
-            fontOptions[Math.floor(Math.random() * fontOptions.length)];
+    if (shouldFlip) {
+      letterSpans.forEach((span, idx) => {
+        if (idx >= lockedCount) {
+          span.style.fontFamily = fontOptions[Math.floor(Math.random() * fontOptions.length)];
         }
       });
-      lastHeaderFlip = now;
+      lastFlip = now;
     }
 
-    // lock header letters from left to right
-    for (let i = 0; i < headerLockedCount; i++) {
-      headerSpans[i].style.fontFamily = finalFont;
+    for (let i = 0; i < lockedCount; i++) {
+      letterSpans[i].style.fontFamily = finalFont;
     }
 
-    if (headerProgress >= 1) {
-      headerSpans.forEach(span => (span.style.fontFamily = finalFont));
+    if (progress >= 1) {
+      letterSpans.forEach((span) => (span.style.fontFamily = finalFont));
     }
 
-    // keep animating while header is still in progress
-    if (headerProgress < 1) {
-      requestAnimationFrame(animate);
-    }
+    if (progress < 1) requestAnimationFrame(animate);
   }
 
   requestAnimationFrame(animate);

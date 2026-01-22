@@ -2,29 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Word Scroll Intro - Single Runaway Button</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ELI SMITH</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <!-- Smaller word at the top (letters injected by JS) -->
-  <div class="top-word" id="top-word"></div>
-
-  <!-- Big word in the center (letters injected by JS) -->
-  <div class="wrapper">
-    <div class="word" id="sample-word"></div>
-  </div>
-
-  <!-- Menu that appears once the full word ascends -->
-  <div class="menu" id="menu">
-    <div class="menu-inner" id="menu-inner">
-      <button class="menu-item" data-id="0">about</button>
-      <button class="menu-item" data-id="1">projects</button>
-      <button class="menu-item" data-id="2">skills</button>
-      <button class="menu-item" data-id="3">contact</button>
+<body class="home">
+  <header class="site-header">
+    <div class="topbar">
+      <div class="topbar-left">
+        <a class="nav-item brand" href="index.html">eli smith</a>
+        <a class="nav-item" href="about.html">about</a>
+        <a class="nav-item" href="projects.html">projects</a>
+        <a class="nav-item" href="skills.html">skills</a>
+      </div>
+      <div class="topbar-right">
+        <a class="nav-item" href="contact.html">contact</a>
+      </div>
     </div>
-  </div>
+</header>
 
-  <div class="scroll-hint">scroll to start</div>
+  <main class="page-content"></main>
+  <section class="word-scroll" id="wordScroll">
+    <div class="word-scroll-track"></div>
+    <div class="scroll-word" id="sample-word"></div>
+  </section>
+
+  <div class="intro-layer" id="intro-layer">
+    <div class="wrapper">
+      <div class="word" id="sample-word"></div>
+    </div>
+    <div class="scroll-hint"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
