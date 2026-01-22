@@ -196,9 +196,10 @@ body {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.12); */
 }
 
 .contact-item a {
   color: #000;
-  text-decor
+  text-decoration: none;
+}
