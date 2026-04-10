@@ -102,15 +102,17 @@ body {
    Index: Locked Word + Endless Scroll Input
 ========================= */
 .word-scroll {
-  width: 90%;
-  max-width: 1536px;
-  margin-inline: auto;
-  margin-top: 6rem;
+  position: fixed;
+  inset: 0;           /* top:0 right:0 bottom:0 left:0 */
+  width: 100vw;
+  height: 100vh;
 
-  height: 55vh;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  z-index: 0;         /* background layer */
+  margin: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.18);
   border-bottom: 1px solid rgba(0, 0, 0, 0.18);
 
@@ -128,6 +130,11 @@ body {
     rgba(0, 0, 0, 1) 82%,
     rgba(0, 0, 0, 0)
   );
+}
+
+.site-header {
+  position: fixed;
+  z-index: 10;
 }
 
 /* Actual scrollable layer (invisible) */
@@ -181,6 +188,7 @@ body {
 .scroll-word span.space {
   width: 0.6em;
 }
+
 
 /* =========================
    Contact list
