@@ -5,6 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Projects | ELI SMITH</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+ .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+      margin-top: 2rem;
+    }
+ 
+    .project-entry {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+ 
+    .project-logo {
+      width: 160px;
+      height: auto;
+      display: block;
+    }
+ 
+    .project-description {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: rgba(0, 0, 0, 0.72);
+      max-width: 580px;
+    }
+ 
+    @media (max-width: 768px) {
+      .project-logo {
+        width: 120px;
+      }
+    }
+  </style>
 </head>
 <body class="inner-page">
   <header class="site-header">
@@ -27,7 +60,7 @@
       <div class="project-entry">
         <img
           class="project-logo"
-          src="SharedCareLogoBlueSized.png"
+          src="img/SharedCareLogoBlueSized.png"
           alt="SharedCare"
         />
         <p class="project-description">
