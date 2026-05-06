@@ -12,26 +12,26 @@
       gap: 5rem;
       margin-top: 2rem;
     }
-
+ 
     .project-entry {
       display: flex;
       flex-direction: column;
       gap: 1.4rem;
     }
-
+ 
     .project-logo {
       width: 160px;
       height: auto;
       display: block;
     }
-
+ 
     .project-description {
       font-size: 0.9rem;
       line-height: 1.75;
       color: rgba(0, 0, 0, 0.72);
       max-width: 580px;
     }
-
+ 
     /* ── Capstone expanded layout ── */
     .capstone-grid {
       display: grid;
@@ -40,22 +40,22 @@
       margin-top: 0.5rem;
       max-width: 760px;
     }
-
+ 
     .capstone-block {
       display: flex;
       flex-direction: column;
       gap: 0.55rem;
     }
-
+ 
     .capstone-block h3 {
-      font-size: 0.65rem;
+      font-size: 0.9rem;
       font-weight: 600;
       letter-spacing: 0.12em;
-      text-transform: uppercase;
+      text-transform: lowercase;
       color: rgba(0, 0, 0, 0.38);
       margin: 0;
     }
-
+ 
     .capstone-block p,
     .capstone-block ul {
       font-size: 0.9rem;
@@ -64,20 +64,20 @@
       margin: 0;
       padding: 0;
     }
-
+ 
     .capstone-block ul {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
     }
-
+ 
     .capstone-block ul li::before {
       content: "–";
       margin-right: 0.45rem;
       color: rgba(0, 0, 0, 0.3);
     }
-
+ 
     /* screenshot embed */
     .capstone-screenshot {
       margin-top: 1.6rem;
@@ -87,13 +87,13 @@
       box-shadow: 0 4px 28px rgba(0, 0, 0, 0.10);
       border: 1px solid rgba(0,0,0,0.07);
     }
-
+ 
     .capstone-screenshot img {
       width: 100%;
       height: auto;
       display: block;
     }
-
+ 
     .capstone-screenshot figcaption {
       font-size: 0.75rem;
       color: rgba(0,0,0,0.4);
@@ -101,7 +101,7 @@
       background: rgba(0,0,0,0.02);
       border-top: 1px solid rgba(0,0,0,0.05);
     }
-
+ 
     /* future changes note */
     .future-note {
       margin-top: 2.2rem;
@@ -111,16 +111,16 @@
       background: rgba(0,0,0,0.018);
       border-radius: 0 6px 6px 0;
     }
-
+ 
     .future-note h3 {
-      font-size: 0.65rem;
+      font-size: 0.9rem;
       font-weight: 600;
       letter-spacing: 0.12em;
-      text-transform: uppercase;
+      text-transform: lowercase;
       color: rgba(0, 0, 0, 0.38);
       margin: 0 0 0.6rem 0;
     }
-
+ 
     .future-note ul {
       list-style: none;
       margin: 0;
@@ -129,27 +129,120 @@
       flex-direction: column;
       gap: 0.35rem;
     }
-
+ 
     .future-note ul li {
       font-size: 0.88rem;
       line-height: 1.7;
       color: rgba(0,0,0,0.65);
     }
-
+ 
     .future-note ul li::before {
       content: "→";
       margin-right: 0.5rem;
       color: rgba(0,0,0,0.28);
     }
-
+ 
+    /* ── Graphic Design Expandable Cards ── */
+    .design-cards {
+      display: flex;
+      flex-direction: column;
+      max-width: 680px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+ 
+    .design-card {
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+ 
+    .design-card-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      gap: 1rem;
+    }
+ 
+    .design-card-trigger:hover .design-card-name {
+      opacity: 1;
+    }
+ 
+    .design-card-name {
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      color: #000;
+      opacity: 0.55;
+      text-transform: lowercase;
+      transition: opacity 0.2s ease;
+      text-align: left;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+ 
+    .design-card-arrow {
+      font-size: 0.85rem;
+      color: rgba(0,0,0,0.3);
+      transition: transform 0.35s ease, opacity 0.2s ease;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+ 
+    .design-card.is-open .design-card-arrow {
+      transform: rotate(45deg);
+      opacity: 0.55;
+    }
+ 
+    .design-card-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+ 
+    .design-card.is-open .design-card-body {
+      grid-template-rows: 1fr;
+    }
+ 
+    .design-card-inner {
+      overflow: hidden;
+    }
+ 
+    .design-card-panel {
+      padding-bottom: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+ 
+    .design-card-img-wrap {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+ 
+    .design-card-img-wrap.bg-light { background: #f8f8f8; }
+    .design-card-img-wrap.bg-dark  { background: #000; }
+ 
+    .design-card-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      padding: 2rem;
+      object-fit: contain;
+    }
+ 
+    .design-card-desc {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: rgba(0,0,0,0.6);
+      max-width: 520px;
+    }
+ 
     @media (max-width: 768px) {
-      .project-logo {
-        width: 120px;
-      }
-      .capstone-grid {
-        grid-template-columns: 1fr;
-        gap: 1.6rem;
-      }
+      .project-logo { width: 120px; }
+      .capstone-grid { grid-template-columns: 1fr; gap: 1.6rem; }
     }
   </style>
 </head>
@@ -203,51 +296,51 @@
         <div class="capstone-grid">
 
           <div class="capstone-block">
-            <h3>Goals</h3>
+            <h3>goals</h3>
             <ul>
-              <li>Reduce communication gaps between care staff and families</li>
-              <li>Give caregivers a clear, low friction workflow</li>
-              <li>Provide families real-time visibility into resident wellbeing</li>
-              <li>Design for non technical users in stressful environments</li>
+              <li>reduce communication gaps between care staff and families</li>
+              <li>give caregivers a clear, low friction workflow</li>
+              <li>provide families real-time visibility into resident wellbeing</li>
+              <li>design for non technical users in stressful environments</li>
             </ul>
           </div>
 
           <div class="capstone-block">
-            <h3>Process</h3>
+            <h3>process</h3>
             <ul>
-              <li>Conducted interviews with caregivers and family members</li>
-              <li>Mapped pain points in current communication workflows</li>
-              <li>Built low-fi wireframes, iterated based on feedback</li>
-              <li>Developed high-fi prototype with dual staff/family views</li>
-              <li>Ran usability testing sessions and refined the interface</li>
+              <li>conducted interviews with caregivers and family members</li>
+              <li>mapped pain points in current communication workflows</li>
+              <li>built low-fi wireframes, iterated based on feedback</li>
+              <li>developed high-fi prototype with dual staff/family views</li>
+              <li>ran usability testing sessions and refined the interface</li>
             </ul>
           </div>
 
           <div class="capstone-block">
-            <h3>My Contributions</h3>
+            <h3>my contributions</h3>
             <ul>
-              <li>Led project management — ran standups, maintained the timeline and scope</li>
-              <li>Designed the SharedCare logo and visual identity</li>
-              <li>Conducted and synthesized UX research interviews</li>
-              <li>Contributed to wireframing and UX decisions</li>
+              <li>led project management — ran standups, maintained the timeline and scope</li>
+              <li>designed the SharedCare logo and visual identity</li>
+              <li>conducted and synthesized UX research interviews</li>
+              <li>contributed to wireframing and UX decisions</li>
             </ul>
           </div>
 
           <div class="capstone-block">
-            <h3>Key Takeaways</h3>
+            <h3>key takeaways</h3>
             <ul>
-              <li>Caregivers need quick glance interfaces, not dense dashboards</li>
-              <li>Families value frequency of updates over depth of detail</li>
-              <li>Trust is built through consistency, not just features</li>
+              <li>caregivers need quick glance interfaces, not dense dashboards</li>
+              <li>families value frequency of updates over depth of detail</li>
+              <li>trust is built through consistency, not just features</li>
             </ul>
           </div>
 
           <div class="capstone-block">
-            <h3>Next Steps</h3>
+            <h3>next Steps</h3>
             <ul>
-              <li>Automate daily summary notifications for families</li>
-              <li>Expand scheduling module with shift handoff notes</li>
-              <li>Integrate with existing care management systems</li>
+              <li>automate daily summary notifications for families</li>
+              <li>expand scheduling module with shift handoff notes</li>
+              <li>integrate with existing care management systems</li>
             </ul>
           </div>
 
@@ -255,7 +348,96 @@
       </div>
       <!-- ── end SharedCare ── -->
 
+      <div class="project-entry">
+ 
+        <p class="project-description">
+          My passion projects include logo design and building visual identities. These are a few recent pieces,
+          each built around a distinct typographic or conceptual direction.
+        </p>
+ 
+        <div class="design-cards">
+ 
+          <!-- loserphilia -->
+          <div class="design-card">
+            <button class="design-card-trigger" aria-expanded="false">
+              <span class="design-card-name">loserphilia</span>
+              <span class="design-card-arrow">+</span>
+            </button>
+            <div class="design-card-body">
+              <div class="design-card-inner">
+                <div class="design-card-panel">
+                  <div class="design-card-img-wrap bg-light">
+                    <img src="img/loserphilialogo.png" alt="Loserphilia logo" />
+                  </div>
+                  <p class="design-card-desc">
+                    A logo built on extreme horizontal compression. The letters stretched
+                    and stacked into a dense typographic block.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+          <!-- musiq -->
+          <div class="design-card">
+            <button class="design-card-trigger" aria-expanded="false">
+              <span class="design-card-name">musiq</span>
+              <span class="design-card-arrow">+</span>
+            </button>
+            <div class="design-card-body">
+              <div class="design-card-inner">
+                <div class="design-card-panel">
+                  <div class="design-card-img-wrap bg-dark">
+                    <img src="img/Musiqlogo2.png" alt="Musiq logo" />
+                  </div>
+                  <p class="design-card-desc">
+                    A mark designed for a music platform, built to work on dark backgrounds.
+                    The form is reduced to its essentials with minimal detail, a strong silhouette and
+                    high contrast.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+          <!-- i love you i hate technology -->
+          <div class="design-card">
+            <button class="design-card-trigger" aria-expanded="false">
+              <span class="design-card-name">i love you i hate technology</span>
+              <span class="design-card-arrow">+</span>
+            </button>
+            <div class="design-card-body">
+              <div class="design-card-inner">
+                <div class="design-card-panel">
+                  <div class="design-card-img-wrap bg-light">
+                    <img src="img/ihatetechnologylogo.png" alt="i love you i hate technology logo" />
+                  </div>
+                  <p class="design-card-desc">
+                    A logo that layers two conflicting statements, with a waveform running
+                    through the text as a visual metaphor for signal and noise. The contrast
+                    between the light and heavy type weights mirrors the tension in the phrase itself.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+        </div>
+      </div>
+      <!-- ── end Graphic Design ── -->
+ 
     </div>
   </main>
+
+  <script>
+    document.querySelectorAll('.design-card-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const card = trigger.closest('.design-card');
+        const isOpen = card.classList.contains('is-open');
+        card.classList.toggle('is-open', !isOpen);
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+      });
+    });
+  </script>
 </body>
 </html>
